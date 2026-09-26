@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humingi ng Tulong | SK Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/web.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__logo">
+        <img src="../navbar.png" alt="Sangguniang Kabataan Logo" />
+      </div>
+      <span class="navbar__title">SK Connect </span>
+    </div>
+    <div class="navbar__links">
+      <a href="index-user.html" class="navbar__link">Home</a>
+      <a href="announcemnet-user.html" class="navbar__link">Announcements</a>
+      <a href="tulong-user.html" class="navbar__link active">Tulong</a>
+      <a href="request.html" class="navbar__link">My Requests</a>
+      <a href="../index.html" class="navbar__link">Log Out</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Humingi ng Tulong</h1>
+      <p class="page-subtitle">Request assistance from your barangay's SK council — educational, medical, financial, or livelihood support. Fill out the form below and a council member will follow up on your request.</p>
+    </header>
+
+    <div class="tulong-layout">
+      <section class="form-card">
+        <h2 class="form-card__title">Assistance Request Form</h2>
+        <p class="form-card__subtitle">Fields marked with an asterisk (*) are required. Your information is only shared with your barangay's SK council.</p>
+
+        <form class="tulong-form" id="tulongForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName">Full name *</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Juan Dela Cruz" required />
+            </div>
+            <div class="form-group">
+              <label for="age">Age *</label>
+              <input type="number" id="age" name="age" min="15" max="30" placeholder="21" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="address">Address / Purok *</label>
+              <input type="text" id="address" name="address" placeholder="Purok 4, Barangay Sto. Niño" required />
+            </div>
+            <div class="form-group">
+              <label for="contact">Contact number *</label>
+              <input type="tel" id="contact" name="contact" placeholder="09XX XXX XXXX" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="assistanceType">Type of assistance needed *</label>
+            <select id="assistanceType" name="assistanceType" required>
+              <option value="" selected disabled>Select the type of assistance</option>
+              <option value="educational">Educational assistance</option>
+              <option value="medical">Medical assistance</option>
+              <option value="financial">Financial assistance</option>
+              <option value="livelihood">Livelihood / job assistance</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="details">Tell us more about your request *</label>
+            <span class="field-hint">Include what the assistance is for and when you need it by.</span>
+            <textarea id="details" name="details" placeholder="e.g. I need help covering school supplies and a uniform for the coming semester." required></textarea>
+          </div>
+
+          <p class="form-note">
+            After submitting, your request goes to your barangay's SK Committee for review. You'll be contacted using the number above to confirm requirements and next steps.
+          </p>
+
+          <button type="submit" class="btn-submit">Submit request</button>
+        </form>
+      </section>
+
+      <aside class="info-card">
+        <h3 class="info-card__title">What happens next</h3>
+        <ul class="info-steps">
+          <li>The SK Committee reviews your request, usually within 3–5 working days.</li>
+          <li>A council member calls or texts you to confirm details and any documents needed.</li>
+          <li>Approved requests are scheduled for release or coordinated with the relevant program.</li>
+        </ul>
+        <p class="info-card__note">
+          Bring a valid ID and, if applicable, proof of enrollment or a medical certificate when your request is approved — this speeds up processing.
+        </p>
+      </aside>
+    </div>
+
+    <p class="footnote">
+      &copy; 2026 Sangguniang Kabataan Portal &middot; For barangay youth &amp; council use
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById("tulongForm");
+      const STORAGE_KEY = "sk_tulong_requests";
+      const AUTH_KEY = "sk_logged_in_user";
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // ==========================================
+        // CHECK LOGIN — read this fresh at submit time,
+        // not once at page load. Reading it at load time
+        // was the bug: if this tab was open before you
+        // logged in (e.g. opened earlier, or logged in via
+        // another tab), the cached value stayed "logged out"
+        // even after localStorage actually had your session.
+        // ==========================================
+        const loggedInUser = (localStorage.getItem(AUTH_KEY) || "").trim();
+
+        if (!loggedInUser) {
+          alert("Please log in before submitting a Tulong request.");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        // ==========================================
+        // VALIDATE FORM
+        // ==========================================
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        // ==========================================
+        // GET FORM DATA
+        // ==========================================
+        const fullName = document.getElementById("fullName").value.trim();
+        const age = document.getElementById("age").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const assistanceType = document.getElementById("assistanceType").value;
+        const details = document.getElementById("details").value.trim();
+
+        // ==========================================
+        // CREATE REQUEST
+        // ==========================================
+        const request = {
+          id: Date.now().toString(),
+          userEmail: loggedInUser,
+          fullName: fullName,
+          age: age,
+          address: address,
+          contact: contact,
+          assistanceType: assistanceType,
+          details: details,
+          status: "pending",
+          submittedAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        // ==========================================
+        // GET EXISTING REQUESTS
+        // ==========================================
+        let requests = [];
+        try {
+          requests = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch (error) {
+          requests = [];
+        }
+
+        // ==========================================
+        // ADD REQUEST
+        // This same STORAGE_KEY is read by admin.html
+        // (via js/admin.js), so the request shows up
+        // there immediately — no redirect to an admin
+        // page is needed for that to happen.
+        // ==========================================
+        requests.push(request);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(requests));
+
+        // ==========================================
+        // SUCCESS
+        // ==========================================
+        alert("Your Tulong request has been submitted successfully.");
+
+        form.reset();
+
+        // Go to the user's own requests page — filename fixed to
+        // match the actual file (requests.html), which will show
+        // "Pending" until the admin approves or rejects it.
+        window.location.href = "request.html";
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Requests | SK Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/web.css" />
+  <style>
+    .requests-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .request-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 18px;
+      background: #fff;
+    }
+    .request-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+    .request-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+    }
+    .request-date {
+      color: #6b7280;
+      font-size: 13px;
+    }
+    .request-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+    .info-item {
+      background: #f8fafc;
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .info-label {
+      display: block;
+      color: #6b7280;
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+    .info-value {
+      font-weight: 600;
+      color: #111827;
+    }
+    .request-details {
+      margin-top: 15px;
+      padding: 16px;
+      background: #f8fafc;
+      border-radius: 10px;
+      line-height: 1.6;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .status-pending {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .status-approved {
+      background: #ecfdf5;
+      color: #047857;
+    }
+    .status-rejected {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+    .empty-requests {
+      text-align: center;
+      padding: 50px 20px;
+      color: #6b7280;
+    }
+    .empty-requests h2 {
+      margin-bottom: 8px;
+      color: #111827;
+    }
+    .request-id {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    @media (max-width: 700px) {
+      .request-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .request-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__logo">
+        <img src="../navbar.png" alt="Sangguniang Kabataan Logo" />
+      </div>
+      <span class="navbar__title">
+        SK Connect
+      </span>
+    </div>
+    <div class="navbar__links">
+      <a href="index-user.html" class="navbar__link">
+        Home
+      </a>
+      <a href="announcemnet-user.html" class="navbar__link">
+        Announcements
+      </a>
+      <a href="tulong-user.html" class="navbar__link">
+        Tulong
+      </a>
+      <a href="request.html" class="navbar__link active">
+        My Requests
+      </a>
+      <a href="../index.html" class="navbar__link" id="logoutLink">
+        Log Out
+      </a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">
+        My Tulong Requests
+      </h1>
+      <p class="page-subtitle">
+        View the status of your submitted assistance requests.
+      </p>
+    </header>
+
+    <section class="requests-card">
+      <div id="requestsContainer"></div>
+    </section>
+
+    <p class="footnote">
+      &copy; 2026 Sangguniang Kabataan Portal &middot; For barangay youth &amp; council use
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = "sk_tulong_requests";
+      const AUTH_KEY = "sk_logged_in_user";
+      const loggedInUser = (localStorage.getItem(AUTH_KEY) || "").trim();
+      const container = document.getElementById("requestsContainer");
+
+      // ==========================================
+      // CHECK LOGIN (read fresh, same fix as tulong-user.html)
+      // ==========================================
+      if (!loggedInUser) {
+        container.innerHTML = `
+          <div class="empty-requests">
+            <h2>Login Required</h2>
+            <p>Please log in to view your Tulong requests.</p>
+          </div>
+        `;
+        return;
+      }
+
+      function escapeHtml(value) {
+        const div = document.createElement("div");
+        div.textContent = value == null ? "" : String(value);
+        return div.innerHTML;
+      }
+
+      // ==========================================
+      // GET REQUESTS
+      // ==========================================
+      let requests = [];
+      try {
+        requests = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch (error) {
+        requests = [];
+      }
+
+      // ==========================================
+      // ONLY SHOW CURRENT USER'S REQUESTS
+      // ==========================================
+      const myRequests = requests.filter(function (request) {
+        return request.userEmail === loggedInUser;
+      });
+
+      // ==========================================
+      // NO REQUESTS
+      // ==========================================
+      if (myRequests.length === 0) {
+        container.innerHTML = `
+          <div class="empty-requests">
+            <h2>No Tulong Requests Yet</h2>
+            <p>You have not submitted any assistance requests.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // ==========================================
+      // DISPLAY REQUESTS
+      // Statuses here come straight from the same
+      // "sk_tulong_requests" storage that js/admin.js
+      // updates when the SK Secretary approves/rejects,
+      // so this list reflects admin decisions automatically
+      // on the next visit/refresh.
+      // ==========================================
+      myRequests
+        .sort(function (a, b) {
+          return new Date(b.submittedAt) - new Date(a.submittedAt);
+        })
+        .forEach(function (request) {
+          let statusText = request.status.charAt(0).toUpperCase() + request.status.slice(1);
+          let statusClass = "status-" + request.status;
+          let assistanceText = request.assistanceType;
+
+          // Format assistance type
+          if (assistanceText) {
+            assistanceText = assistanceText.charAt(0).toUpperCase() + assistanceText.slice(1);
+          }
+
+          const submittedDate = new Date(request.submittedAt).toLocaleString("en-PH", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+          });
+
+          const item = document.createElement("div");
+          item.className = "request-item";
+          item.innerHTML = `
+            <div class="request-header">
+              <div>
+                <h3 class="request-title">${escapeHtml(assistanceText || "Assistance")} Request</h3>
+                <div class="request-date">Submitted ${escapeHtml(submittedDate)}</div>
+                <div class="request-id">Reference #${escapeHtml(request.id)}</div>
+              </div>
+              <span class="status-badge ${statusClass}">${escapeHtml(statusText)}</span>
+            </div>
+            <div class="request-info">
+              <div class="info-item">
+                <span class="info-label">Age</span>
+                <span class="info-value">${escapeHtml(request.age)}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Address / Purok</span>
+                <span class="info-value">${escapeHtml(request.address)}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Contact number</span>
+                <span class="info-value">${escapeHtml(request.contact)}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Type of assistance</span>
+                <span class="info-value">${escapeHtml(assistanceText)}</span>
+              </div>
+            </div>
+            <div class="request-details">${escapeHtml(request.details)}</div>
+          `;
+
+          container.appendChild(item);
+        });
+    })();
+  </script>
+</body>
+</html>

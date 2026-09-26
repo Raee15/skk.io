@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Log In | SK Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <section class="hero">
+      <div class="hero__shape hero__shape--one"></div>
+      <div class="hero__shape hero__shape--two"></div>
+
+      <div class="hero__brand">
+        <div class="hero__logo-circle">
+          <!-- Replace 'sklogo.png' with your actual logo image path -->
+          <img src="navbar.png" alt="SK Logo" class="hero__logo-img" />
+        </div>
+        <h1 class="hero__brand-title">SK Connect </h1>
+        <p class="hero__brand-tagline">Admin Panel</p>
+      </div>
+    </section>
+
+    <section class="login-panel">
+      <div class="login-card">
+
+        <div class="login-card__header">
+          <span class="admin-badge">Administrator Access</span>
+          <h2 class="login-card__title">Admin log in</h2>
+          <p class="login-card__subtitle">This area is restricted to SK officials. Log in with your admin credentials to manage the portal.</p>
+        </div>
+
+        <form class="login-form" id="adminLoginForm" novalidate>
+
+          <p class="form-error" id="adminLoginError" role="alert" hidden>
+            We couldn't verify those admin credentials. Check your email and password and try again.
+          </p>
+
+          <div class="form-group">
+            <label for="adminEmail">Admin email address</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg>
+              <input type="email" id="adminEmail" name="email" placeholder="admin@skportal.gov.ph" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__row">
+              <label for="adminPassword">Password</label>
+              <a href="#" class="link-inline">Forgot password?</a>
+            </div>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <input type="text" id="adminPassword" name="password" placeholder="Enter your password" autocomplete="current-password" required />
+              <input type="checkbox" id="toggleAdminPassword" class="toggle-password-checkbox" />
+              <label for="toggleAdminPassword" class="toggle-password" aria-label="Show password">
+                <svg class="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94M9.9 4.24A10.6 10.6 0 0 1 12 4c7 0 11 7 11 7a21.6 21.6 0 0 1-2.61 3.53"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+              </label>
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" name="remember" />
+            Keep me logged in on this device
+          </label>
+
+          <button type="submit" class="btn-login">Log in as Admin</button>
+
+          <p class="signup-line">
+            Not an admin? <a href="login.html" class="link-inline link-inline--strong">Go to resident log in</a>
+          </p>
+        </form>
+
+      </div>
+
+      <p class="footnote">
+        &copy; 2026 Sangguniang Kabataan Portal &middot; For barangay youth &amp; council use
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+
+    document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value.trim();
+      const errorBox = document.getElementById('adminLoginError');
+
+      if (!email || !password) {
+        errorBox.hidden = false;
+        return;
+      }
+
+      errorBox.hidden = true;
+      window.location.href = 'admin.html';
+    });
+  </script>
+</body>
+</html>

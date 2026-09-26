@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humingi ng Tulong | SK Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/web.css" />
+
+  <style>
+    .tulong-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .login-prompt-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      padding: 48px 36px;
+      border: 1px solid var(--line-100);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .login-prompt-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #fff3d6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-600);
+    }
+
+    .login-prompt-icon svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .login-prompt-title {
+      font-size: 1.5rem;
+      color: var(--navy-800);
+      font-weight: 700;
+    }
+
+    .login-prompt-desc {
+      font-size: 0.95rem;
+      color: var(--ink-600);
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .login-prompt-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin-top: 8px;
+    }
+
+    .btn-large-login {
+      width: 100%;
+      justify-content: center;
+      padding: 16px 28px;
+      font-size: 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--navy-800);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-weight: 600;
+      transition: background 0.15s ease, transform 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-large-login:hover {
+      background: var(--navy-700);
+      color: var(--gold-500);
+    }
+
+    .login-prompt-footer {
+      font-size: 0.88rem;
+      color: var(--ink-600);
+      margin-top: 4px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--line-100);
+    }
+
+    .info-card__title {
+      font-size: 1.15rem;
+      color: var(--navy-800);
+      margin-bottom: 16px;
+    }
+
+    .info-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .info-steps li {
+      position: relative;
+      padding-left: 24px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--ink-600);
+    }
+
+    .info-steps li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold-500);
+    }
+
+    .info-card__note {
+      padding: 14px 16px;
+      background: var(--cream-50);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--gold-500);
+      font-size: 0.82rem;
+      color: var(--ink-600);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 850px) {
+      .tulong-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar__brand">
+      <div class="navbar__logo">
+        <img src="navbar.png" alt="Sangguniang Kabataan Logo" />
+      </div>
+      <span class="navbar__title">SK Connect </span>
+    </div>
+    <div class="navbar__links">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="announcements.html" class="navbar__link">Announcements</a>
+      <a href="tulong.html" class="navbar__link active">Tulong</a>
+      <a href="login.html" class="navbar__link">Log In</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <header class="page-header">
+      <h1 class="page-title">Humingi ng Tulong</h1>
+      <p class="page-subtitle">Request assistance from your barangay's SK council — educational, medical, financial, or livelihood support.</p>
+    </header>
+
+    <div class="tulong-layout">
+      <section class="login-prompt-card">
+        <div class="login-prompt-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+
+        <h2 class="login-prompt-title">Please Log In First</h2>
+
+        <p class="login-prompt-desc">
+          To submit an assistance request form, you need an active SK Portal account. Logging in allows us to securely process your request and keep you updated on its status.
+        </p>
+
+        <div class="login-prompt-actions">
+          <a href="login.html" class="btn-large-login">
+            Log In to Continue
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <p class="login-prompt-footer">
+            Don't have an account yet? 
+            <a href="register.html" class="link-inline link-inline--strong">Register here</a>
+          </p>
+        </div>
+      </section>
+
+      <aside class="info-card">
+        <h3 class="info-card__title">What happens next</h3>
+        <ul class="info-steps">
+          <li>Log in or register for an account on the SK Portal.</li>
+          <li>Fill out the Tulong Assistance Form with your details and specific requirements.</li>
+          <li>The SK Committee reviews your request, usually within 3–5 working days.</li>
+          <li>A council member contacts you to confirm details and provide updates.</li>
+        </ul>
+        <p class="info-card__note">
+          <strong>Tip:</strong> Keep a valid ID and proof of residence ready when submitting your request to ensure faster processing.
+        </p>
+      </aside>
+    </div>
+
+    <p class="footnote">
+      &copy; 2026 Sangguniang Kabataan Portal &middot; For barangay youth &amp; council use
+    </p>
+  </main>
+
+  <script>
+    
+  </script>
+</body>
+</html>

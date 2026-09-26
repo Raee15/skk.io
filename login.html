@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In | SK Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+
+  <div class="page">
+
+    <section class="hero">
+      <div class="hero__shape hero__shape--one"></div>
+      <div class="hero__shape hero__shape--two"></div>
+
+      <div class="hero__brand">
+        <div class="hero__logo-circle">
+          <img src="navbar.png" alt="SK Logo" class="hero__logo-img" />
+        </div>
+        <h1 class="hero__brand-title">SK Connect</h1>
+        <p class="hero__brand-tagline"></p>
+      </div>
+    </section>
+
+    <section class="login-panel">
+      <div class="login-card">
+
+        <div class="login-card__header">
+          <h2 class="login-card__title">Welcome back</h2>
+          <p class="login-card__subtitle">Log in with your registered account to continue.</p>
+        </div>
+
+        <form class="login-form" id="loginForm" novalidate>
+
+          <p class="form-error" id="loginError" role="alert" hidden>
+            We couldn't find an account with those details. Check your email and password and try again.
+          </p>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 6l8 7 8-7"/></svg>
+              <input type="email" id="email" name="email" placeholder="juan.delacruz@email.com" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-group__row">
+              <label for="password">Password</label>
+              <a href="#" class="link-inline">Forgot password?</a>
+            </div>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <input type="text" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required />
+              <input type="checkbox" id="togglePassword" class="toggle-password-checkbox" />
+              <label for="togglePassword" class="toggle-password" aria-label="Show password">
+                <svg class="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a21.6 21.6 0 0 1 5.06-5.94M9.9 4.24A10.6 10.6 0 0 1 12 4c7 0 11 7 11 7a21.6 21.6 0 0 1-2.61 3.53"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+              </label>
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" name="remember" />
+            Keep me logged in on this device
+          </label>
+
+          <button type="submit" class="btn-login">Log in</button>
+
+          <p class="signup-line">
+            Don't have an account yet? <a href="register.html" class="link-inline link-inline--strong">Register here</a><br><br>
+             Are you an admin? <a href="login-admin.html" class="link-inline link-inline--strong">Login as an admin</a>
+          </p>
+        </form>
+
+      </div>
+
+      <p class="footnote">
+        &copy; 2026 Sangguniang Kabataan Portal &middot; For barangay youth &amp; council use
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+    // No backend yet — this stands in for "credentials checked, now go to the portal".
+    // Swap this out once real authentication is wired up.
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorBox = document.getElementById('loginError');
+
+      if (!email || !password) {
+        errorBox.hidden = false;
+        return;
+      }
+
+      errorBox.hidden = true;
+
+      // This is the piece that was missing: every other page (Tulong,
+      // My Requests, etc.) checks localStorage.getItem("sk_logged_in_user")
+      // to know someone is logged in. Without this line, that key was
+      // never being set, so those pages always saw "logged out" — that
+      // was the real cause of the "please log in" message.
+      localStorage.setItem('sk_logged_in_user', email);
+
+      window.location.href = 'user/index-user.html';
+    });
+  </script>
+</body>
+</html>

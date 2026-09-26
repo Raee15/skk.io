@@ -1,0 +1,197 @@
+/* ==========================================
+   ANNOUNCEMENTS PAGE — page-specific styles
+   (loaded after web.css, only on announcements.html;
+   reuses the navy/gold tokens defined in web.css)
+   ========================================== */
+
+/* ---- Top highlight banner (Arellano-style: white
+   callout card + bullet list on a navy/gold band) ---- */
+.announce-banner {
+  background: linear-gradient(120deg, var(--gold-500) 0%, var(--gold-600) 100%);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-card);
+}
+
+.announce-banner__highlight {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.announce-banner__eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold-600);
+  margin-bottom: 8px;
+}
+
+.announce-banner__title {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  color: var(--navy-800);
+  font-weight: 700;
+}
+
+.announce-banner__sub {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--ink-600);
+}
+
+.announce-banner__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 6px 6px 6px 0;
+}
+
+.announce-banner__list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--navy-900);
+}
+
+.announce-banner__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--navy-800);
+}
+
+.announce-banner__list li strong {
+  color: var(--navy-900);
+}
+
+.announce-banner__contact {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--navy-900);
+  font-weight: 600;
+}
+
+/* ---- Photo news-grid (Arellano "News" style):
+   one big featured card + smaller cards stacked beside it,
+   each with a dark bottom bar carrying the date + title ---- */
+.news-grid {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.news-grid__featured {
+  flex: 1.6;
+  min-width: 0;
+}
+
+.news-grid__side {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.news-grid__side .news-card {
+  flex: 1;
+}
+
+.news-card {
+  position: relative;
+  display: block;
+  min-height: 190px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--navy-800);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-card);
+}
+
+/* Placeholder art until real photos are swapped in via inline
+   style="background-image: url(...)" on the .news-card element */
+.news-card--tone-a { background-image: linear-gradient(155deg, var(--navy-700) 0%, var(--navy-900) 100%); }
+.news-card--tone-b { background-image: linear-gradient(155deg, var(--gold-600) 0%, var(--navy-800) 120%); }
+.news-card--tone-c { background-image: linear-gradient(155deg, var(--navy-900) 0%, var(--gold-600) 140%); }
+
+.news-grid__featured .news-card {
+  min-height: 400px;
+}
+
+.news-card__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 27, 51, 0.88);
+  padding: 10px 14px 12px;
+}
+
+.news-grid__featured .news-card__bar {
+  padding: 16px 20px 18px;
+}
+
+.news-card__date {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.news-grid__featured .news-card__date {
+  font-size: 0.82rem;
+}
+
+.news-card__title {
+  margin-top: 3px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-grid__featured .news-card__title {
+  font-size: 1.15rem;
+  -webkit-line-clamp: 3;
+}
+
+.news-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+@media (max-width: 850px) {
+  .announce-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .news-grid {
+    flex-direction: column;
+  }
+
+  .news-grid__featured .news-card,
+  .news-grid__side .news-card {
+    min-height: 220px;
+  }
+}

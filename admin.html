@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin Dashboard | SK Connect</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+
+    <div class="navbar__brand">
+
+      <div class="navbar__logo">
+        <img src="navbar.png" alt="Sangguniang Kabataan Logo" />
+      </div>
+
+      <span class="navbar__title">
+        SK Connect Admin
+      </span>
+
+    </div>
+
+    <div class="navbar__links">
+
+      <a href="admin.html" class="navbar__link active">
+        Admin
+      </a>
+
+      <a href="login-admin.html" class="navbar__link">
+        Log out
+      </a>
+
+      <span class="navbar__admin-tag">
+        Admin
+      </span>
+
+    </div>
+
+  </nav>
+
+
+  <main class="container">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+
+      <div>
+
+        <h1 class="page-title">
+          Admin Dashboard
+        </h1>
+
+        <p class="page-subtitle">
+          Review and manage Tulong assistance requests submitted through SK Connect.
+        </p>
+
+      </div>
+
+      <div class="page-header__meta">
+
+        Logged in as <strong>SK Secretary</strong><br />
+
+        Barangay 674, Zone 73
+
+      </div>
+
+    </header>
+
+
+    <!-- STATISTICS -->
+    <section class="stat-strip">
+
+      <div class="stat-card">
+
+        <span class="stat-card__label">
+          Total Requests
+        </span>
+
+        <strong class="stat-card__value" id="totalRequests">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-card__label">
+          Pending
+        </span>
+
+        <strong class="stat-card__value" id="pendingRequests">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-card__label">
+          Approved
+        </span>
+
+        <strong class="stat-card__value" id="approvedRequests">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <span class="stat-card__label">
+          Rejected
+        </span>
+
+        <strong class="stat-card__value" id="rejectedRequests">
+          0
+        </strong>
+
+      </div>
+
+    </section>
+
+
+    <!-- TULONG REQUESTS -->
+    <section class="panel-card">
+
+      <div class="panel-card__toolbar">
+
+        <div>
+
+          <h2 class="panel-card__title">
+            Tulong Assistance Requests
+          </h2>
+
+          <p class="panel-card__subtitle">
+            Review requests submitted through the Tulong form.
+          </p>
+
+        </div>
+
+
+        <div class="toolbar-controls">
+
+          <input
+            type="text"
+            class="search-input"
+            id="reqSearch"
+            placeholder="Search requester..."
+          />
+
+
+          <select
+            class="filter-select"
+            id="reqStatusFilter"
+          >
+
+            <option value="all">
+              All statuses
+            </option>
+
+            <option value="pending">
+              Pending
+            </option>
+
+            <option value="approved">
+              Approved
+            </option>
+
+            <option value="rejected">
+              Rejected
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-wrapper">
+
+        <table class="data-table">
+
+          <thead>
+
+            <tr>
+
+              <th>Requester</th>
+
+              <th>Age</th>
+
+              <th>Address / Purok</th>
+
+              <th>Contact</th>
+
+              <th>Type</th>
+
+              <th>Details</th>
+
+              <th>Submitted</th>
+
+              <th>Status</th>
+
+              <th>Action</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="requestsBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        class="empty-state"
+        id="requestsEmpty"
+        style="display:none;"
+      >
+        No Tulong requests found.
+      </div>
+
+    </section>
+
+
+    <p class="footnote">
+
+      &copy; 2026 Sangguniang Kabataan Portal
+      &middot;
+      Admin view
+      &middot;
+      For barangay council use only
+
+    </p>
+
+  </main>
+
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <script src="js/admin.js"></script>
+
+</body>
+</html>
